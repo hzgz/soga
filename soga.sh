@@ -233,6 +233,19 @@ show_log() {
     fi
 }
 
+install_bbr() {
+    bash <(curl -L -s https://github.com/sprov065/blog/raw/master/bbr.sh)
+    if [[ $? == 0 ]]; then
+        echo ""
+        echo -e "${green}安装 bbr 成功，请重启服务器${plain}"
+    else
+        echo ""
+        echo -e "${red}下载 bbr 安装脚本失败，请检查本机能否连接 Github${plain}"
+    fi
+
+    before_show_menu
+}
+
 update_shell() {
     wget -O /usr/bin/soga -N --no-check-certificate https://github.com/hzgz/soga/raw/master/soga.sh
     if [[ $? != 0 ]]; then
@@ -368,9 +381,10 @@ show_menu() {
   ${green}9.${plain} 取消 soga 开机自启
 ————————————————
  ${green}10.${plain} 查看 soga 版本
+ ${green}11.${plain} 一键安装 bbr (最新内核)
  "
     show_status
-    echo && read -p "请输入选择 [0-10]: " num
+    echo && read -p "请输入选择 [0-11]: " num
 
     case "${num}" in
         0) exit 0
@@ -395,7 +409,9 @@ show_menu() {
         ;;
         10) check_install && show_soga_version
         ;;
-        *) echo -e "${red}请输入正确的数字 [0-10]${plain}"
+        11) install_bbr
+        ;;
+        *) echo -e "${red}请输入正确的数字 [0-11]${plain}"
         ;;
     esac
 }
