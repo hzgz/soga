@@ -213,6 +213,13 @@ enable() {
     fi
 }
 
+status() {
+    systemctl status soga --no-pager -l
+    if [[ $# == 0 ]]; then
+        before_show_menu
+    fi
+}
+
 disable() {
     systemctl disable soga
     if [[ $? == 0 ]]; then
